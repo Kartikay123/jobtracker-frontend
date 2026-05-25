@@ -13,12 +13,19 @@ export const useJobs = () => {
   });
 };
 
+// Invalidate both jobs list and analytics so every job write
+// reflects instantly on the dashboard/analytics page without a reload.
+const invalidateJobsAndAnalytics = (qc) => {
+  qc.invalidateQueries({ queryKey: queryKeys.jobs.all });
+  qc.invalidateQueries({ queryKey: ['analytics'] });
+};
+
 export const useCreateJob = () => {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: jobsApi.create,
     onSuccess: () => {
-      qc.invalidateQueries({ queryKey: queryKeys.jobs.all });
+      invalidateJobsAndAnalytics(qc);
       toast.success('Job added');
     },
     onError: (e) => toast.error(e.response?.data?.message || 'Failed to add job'),
@@ -29,7 +36,7 @@ export const useUpdateJob = () => {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: ({ id, ...payload }) => jobsApi.update(id, payload),
-    onSuccess: () => qc.invalidateQueries({ queryKey: queryKeys.jobs.all }),
+    onSuccess: () => invalidateJobsAndAnalytics(qc),
   });
 };
 
@@ -50,7 +57,7 @@ export const useUpdateJobStatus = () => {
       ctx?.snapshots?.forEach(([key, data]) => qc.setQueryData(key, data));
       toast.error('Failed to update status');
     },
-    onSettled: () => qc.invalidateQueries({ queryKey: queryKeys.jobs.all }),
+    onSettled: () => invalidateJobsAndAnalytics(qc),
   });
 };
 
@@ -59,7 +66,7 @@ export const useDeleteJob = () => {
   return useMutation({
     mutationFn: jobsApi.remove,
     onSuccess: () => {
-      qc.invalidateQueries({ queryKey: queryKeys.jobs.all });
+      invalidateJobsAndAnalytics(qc);
       toast.success('Job deleted');
     },
   });
