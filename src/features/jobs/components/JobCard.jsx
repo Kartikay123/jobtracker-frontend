@@ -2,28 +2,20 @@ import { memo } from 'react';
 import { useDraggable } from '@dnd-kit/core';
 import { formatRelative } from '@/lib/formatters';
 
-export const JobCard = memo(({ job }) => {
-  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
+export const JobCard = memo(({ job, isOverlay }) => {
+  const { attributes, listeners, setNodeRef } = useDraggable({
     id: job.id,
+    // Disable draggable when rendered inside DragOverlay (isOverlay=true)
+    disabled: isOverlay,
   });
-  const style = transform
-    ? {
-        transform: `translate3d(${transform.x}px, ${transform.y}px, 0) scale(1.03)`,
-        opacity: 1,
-        zIndex: isDragging ? 999 : 'auto',
-        boxShadow: isDragging ? '0 20px 40px -8px rgba(0,0,0,0.25)' : undefined,
-        borderColor: isDragging ? 'var(--jt-primary)' : undefined,
-        cursor: 'grabbing',
-      }
-    : undefined;
 
   return (
     <div
-      ref={setNodeRef}
-      {...listeners}
-      {...attributes}
-      style={style}
+      ref={isOverlay ? undefined : setNodeRef}
+      {...(isOverlay ? {} : listeners)}
+      {...(isOverlay ? {} : attributes)}
       className="kanban-card"
+      style={isOverlay ? { cursor: 'grabbing' } : undefined}
     >
       <div className="title">{job.title}</div>
       <div className="company">{job.company}</div>
