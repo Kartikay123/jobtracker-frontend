@@ -36,7 +36,11 @@ export const useUpdateJob = () => {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: ({ id, ...payload }) => jobsApi.update(id, payload),
-    onSuccess: () => invalidateJobsAndAnalytics(qc),
+    onSuccess: () => {
+      invalidateJobsAndAnalytics(qc);
+      toast.success('Job updated');
+    },
+    onError: () => toast.error('Failed to update job'),
   });
 };
 
