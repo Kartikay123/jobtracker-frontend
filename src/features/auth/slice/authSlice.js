@@ -51,7 +51,7 @@ const authSlice = createSlice({
     b.addCase(loginThunk.fulfilled, (s, a) => {
       s.status = 'succeeded';
       s.user = a.payload.user;
-      s.token = a.payload.token;
+      s.token = a.payload.accessToken;
     });
     b.addCase(loginThunk.rejected, (s, a) => {
       s.status = 'failed';
@@ -64,7 +64,7 @@ const authSlice = createSlice({
     b.addCase(signupThunk.fulfilled, (s, a) => {
       s.status = 'succeeded';
       s.user = a.payload.user;
-      s.token = a.payload.token;
+      s.token = a.payload.accessToken;
     });
     b.addCase(signupThunk.rejected, (s, a) => {
       s.status = 'failed';
