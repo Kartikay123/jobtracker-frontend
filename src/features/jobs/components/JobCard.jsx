@@ -8,10 +8,12 @@ export const JobCard = memo(({ job }) => {
   });
   const style = transform
     ? {
-        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
-        opacity: isDragging ? 0.7 : 1,
-        zIndex: isDragging ? 10 : 'auto',
-        boxShadow: isDragging ? 'var(--jt-shadow-lg)' : undefined,
+        transform: `translate3d(${transform.x}px, ${transform.y}px, 0) scale(1.03)`,
+        opacity: 1,
+        zIndex: isDragging ? 999 : 'auto',
+        boxShadow: isDragging ? '0 20px 40px -8px rgba(0,0,0,0.25)' : undefined,
+        borderColor: isDragging ? 'var(--jt-primary)' : undefined,
+        cursor: 'grabbing',
       }
     : undefined;
 
