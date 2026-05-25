@@ -13,7 +13,7 @@ export default function InterviewPrepPage() {
   const save = useSaveAnswer();
 
   const handleGenerate = async () => {
-    const data = await generate.mutateAsync({ role });
+    const data = await generate.mutateAsync({ role, count: 15 });
     setQuestions(data.questions || []);
     setAnswers({});
   };
