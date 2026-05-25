@@ -2,6 +2,7 @@ import { memo, useState, useCallback, lazy, Suspense } from 'react';
 import { useDraggable } from '@dnd-kit/core';
 import { formatRelative } from '@/lib/formatters';
 import { CardContextMenu } from './CardContextMenu';
+import { useDeleteJob } from '../hooks/useJobs';
 
 const EditJobModal = lazy(() => import('./EditJobModal'));
 
@@ -12,6 +13,7 @@ export const JobCard = memo(({ job }) => {
 
   const [menu, setMenu] = useState(null); // { x, y } when open
   const [editing, setEditing] = useState(false);
+  const deleteJob = useDeleteJob();
 
   const handleContextMenu = useCallback((e) => {
     e.preventDefault();
@@ -58,6 +60,7 @@ export const JobCard = memo(({ job }) => {
           x={menu.x}
           y={menu.y}
           onEdit={() => setEditing(true)}
+          onDelete={() => { deleteJob.mutate(job.id); setMenu(null); }}
           onClose={() => setMenu(null)}
         />
       )}

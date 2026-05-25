@@ -1,10 +1,11 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-const MENU_WIDTH = 160;
+const MENU_WIDTH = 180;
 
-export const CardContextMenu = ({ x, y, onEdit, onClose }) => {
+export const CardContextMenu = ({ x, y, onEdit, onDelete, onClose }) => {
   const ref = useRef(null);
+  const [confirming, setConfirming] = useState(false);
 
   // Adjust position so menu doesn't overflow viewport
   const left = Math.min(x, window.innerWidth - MENU_WIDTH - 8);
@@ -77,6 +78,51 @@ export const CardContextMenu = ({ x, y, onEdit, onClose }) => {
           </svg>
           Edit Job
         </button>
+
+        {!confirming ? (
+          <button
+            style={{ ...itemStyle, color: '#ef4444' }}
+            onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(239,68,68,0.08)')}
+            onMouseLeave={(e) => (e.currentTarget.style.background = 'none')}
+            onClick={() => setConfirming(true)}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="3 6 5 6 21 6" />
+              <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+              <path d="M10 11v6M14 11v6" />
+              <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
+            </svg>
+            Delete Job
+          </button>
+        ) : (
+          <div style={{ padding: '8px 14px', borderTop: '1px solid var(--jt-border)' }}>
+            <div style={{ fontSize: '0.8rem', fontWeight: 600, color: '#ef4444', marginBottom: 8 }}>
+              Are you sure?
+            </div>
+            <div style={{ display: 'flex', gap: 6 }}>
+              <button
+                style={{
+                  flex: 1, padding: '4px 0', fontSize: '0.78rem', fontWeight: 600,
+                  background: '#ef4444', color: '#fff', border: 'none',
+                  borderRadius: 6, cursor: 'pointer',
+                }}
+                onClick={() => { onDelete(); }}
+              >
+                Confirm
+              </button>
+              <button
+                style={{
+                  flex: 1, padding: '4px 0', fontSize: '0.78rem', fontWeight: 500,
+                  background: 'var(--jt-surface)', color: 'var(--jt-text)',
+                  border: '1px solid var(--jt-border)', borderRadius: 6, cursor: 'pointer',
+                }}
+                onClick={() => setConfirming(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </>,
     document.body,

@@ -29,6 +29,11 @@ export default function ResumeMatchPage() {
             <Card.Body>
               <Form onSubmit={handleSubmit}>
                 <ResumeUploader value={resumeFile} onChange={setResumeFile} />
+                <p style={{ fontSize: '0.8rem', color: 'var(--jt-text-muted)', marginTop: '-0.5rem', marginBottom: '1rem' }}>
+                  No file?{' '}
+                  <a href="/profile" style={{ color: 'var(--jt-primary-strong)' }}>Save your resume to your profile</a>
+                  {' '}and it will be used automatically.
+                </p>
                 <JobDescriptionInput value={jobDescription} onChange={setJobDescription} />
                 <Button
                   type="submit"

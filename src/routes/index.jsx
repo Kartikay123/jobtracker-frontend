@@ -13,6 +13,8 @@ const JobsPage = lazy(() => import('@/features/jobs/pages/JobsPage'));
 const AnalyticsPage = lazy(() => import('@/features/analytics/pages/AnalyticsPage'));
 const InterviewPrepPage = lazy(() => import('@/features/interviewPrep/pages/InterviewPrepPage'));
 const ResumeMatchPage = lazy(() => import('@/features/resumeMatch/pages/ResumeMatchPage'));
+const ProfilePage = lazy(() => import('@/features/profile/pages/ProfilePage'));
+const CoverLetterPage = lazy(() => import('@/features/coverLetter/pages/CoverLetterPage'));
 const NotFoundPage = lazy(() => import('@/shared/components/NotFound/NotFound'));
 
 export const AppRoutes = () => (
@@ -33,6 +35,8 @@ export const AppRoutes = () => (
           <Route path="/analytics" element={<AnalyticsPage />} />
           <Route path="/interview" element={<InterviewPrepPage />} />
           <Route path="/resume" element={<ResumeMatchPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/cover-letter" element={<CoverLetterPage />} />
         </Route>
       </Route>
 
