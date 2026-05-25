@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Row, Col, Card, Badge } from 'react-bootstrap';
 import { selectCurrentUser } from '@/features/auth/slice/authSlice';
-import { useJobs } from '@/features/jobs/hooks/useJobs';
+import { useAllJobs } from '@/features/jobs/hooks/useJobs';
 import { useAnalytics } from '@/features/analytics/hooks/useAnalytics';
 import { Spinner } from '@/shared/components/Spinner/Spinner';
 import { formatRelative } from '@/lib/formatters';
@@ -78,7 +78,7 @@ const QuickAction = ({ to, icon, label, description }) => (
 
 export default function DashboardPage() {
   const user = useSelector(selectCurrentUser);
-  const { data: jobs = [], isLoading: jobsLoading } = useJobs();
+  const { data: jobs = [], isLoading: jobsLoading } = useAllJobs();
   const { data: analytics } = useAnalytics('30d');
 
   const hour = new Date().getHours();

@@ -13,6 +13,14 @@ export const useJobs = () => {
   });
 };
 
+// Fetches ALL jobs with no filters — used by Dashboard so the search bar
+// on the Jobs page doesn't affect the pipeline counts or recent activity.
+export const useAllJobs = () =>
+  useQuery({
+    queryKey: queryKeys.jobs.list({}),
+    queryFn: () => jobsApi.list({}),
+  });
+
 // Invalidate both jobs list and analytics so every job write
 // reflects instantly on the dashboard/analytics page without a reload.
 const invalidateJobsAndAnalytics = (qc) => {
