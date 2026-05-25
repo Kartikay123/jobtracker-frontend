@@ -8,7 +8,7 @@ import { Spinner } from '@/shared/components/Spinner/Spinner';
 
 const LoginPage = lazy(() => import('@/features/auth/pages/LoginPage'));
 const SignupPage = lazy(() => import('@/features/auth/pages/SignupPage'));
-const DashboardPage = lazy(() => import('@/features/analytics/pages/AnalyticsPage'));
+const DashboardPage = lazy(() => import('@/features/dashboard/pages/DashboardPage'));
 const JobsPage = lazy(() => import('@/features/jobs/pages/JobsPage'));
 const AnalyticsPage = lazy(() => import('@/features/analytics/pages/AnalyticsPage'));
 const InterviewPrepPage = lazy(() => import('@/features/interviewPrep/pages/InterviewPrepPage'));
