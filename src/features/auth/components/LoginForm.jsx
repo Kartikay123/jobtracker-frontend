@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -5,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { FormInput } from '@/shared/components/FormInput/FormInput';
 import { Button } from '@/shared/components/Button/Button';
-import { loginThunk, selectAuth } from '../slice/authSlice';
+import { loginThunk, selectAuth, clearAuthError } from '../slice/authSlice';
 
 const schema = z.object({
   email: z.string().email('Invalid email'),
@@ -22,6 +23,11 @@ export const LoginForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { status, error } = useSelector(selectAuth);
+
+  // Clear any stale error from a previous login/signup attempt
+  useEffect(() => {
+    dispatch(clearAuthError());
+  }, [dispatch]);
 
   const onSubmit = async (values) => {
     const result = await dispatch(loginThunk(values));

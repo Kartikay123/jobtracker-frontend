@@ -42,6 +42,12 @@ const authSlice = createSlice({
       state.error = null;
       clearAuthState();
     },
+    // Used by login/signup pages on mount so a previous "Login failed"
+    // message doesn't leak across when the user switches between the two.
+    clearAuthError: (state) => {
+      state.error = null;
+      if (state.status === 'failed') state.status = 'idle';
+    },
   },
   extraReducers: (b) => {
     b.addCase(loginThunk.pending, (s) => {
@@ -73,7 +79,7 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, clearAuthError } = authSlice.actions;
 export const selectAuth = (s) => s.auth;
 export const selectIsAuthenticated = (s) => Boolean(s.auth.token);
 export const selectCurrentUser = (s) => s.auth.user;
